@@ -10,7 +10,17 @@ class Settings:
     ENVIRONMENT: str = os.getenv("ENVIRONMENT", "development")
 
     GEMINI_API_KEY: str = os.getenv("GEMINI_API_KEY", "")
-    GEMINI_MODEL: str = os.getenv("GEMINI_MODEL", "gemini-3.5-flash")
+    GEMINI_MODEL: str = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
+    GEMINI_EMBEDDING_MODEL: str = os.getenv(
+        "GEMINI_EMBEDDING_MODEL",
+        "gemini-embedding-001"
+    )
+
+    CHROMA_PATH: str = os.getenv("CHROMA_PATH", "chroma_db")
+    CHROMA_COLLECTION_NAME: str = os.getenv(
+        "CHROMA_COLLECTION_NAME",
+        "firstgen_documents"
+    )
 
 
 settings = Settings()
