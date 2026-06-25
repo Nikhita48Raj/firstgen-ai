@@ -42,6 +42,13 @@ export type RAGChatResponse = {
   sources: SourceChunk[];
 };
 
+export type SimplifyResponse = {
+  simplified_text: string;
+  language: string;
+  audience: string;
+  message: string;
+};
+
 const API_BASE_URL = "http://127.0.0.1:8000";
 
 export async function sendGeneralChat(
@@ -94,6 +101,50 @@ export async function sendRAGChat(
 
   if (!response.ok) {
     throw new Error("Failed to get RAG response from FirstGen AI backend");
+  }
+
+  return response.json();
+}
+
+export async function simplifyText(data: {
+  text: string;
+  language: Language;
+  audience: ChatMode;
+}): Promise<SimplifyResponse> {
+  const response = await fetch(`${API_BASE_URL}/simplify/text`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.detail || "Text simplification failed");
+  }
+
+  return response.json();
+}
+
+export async function simplifyPDF(data: {
+  file: File;
+  language: Language;
+  audience: ChatMode;
+}): Promise<SimplifyResponse> {
+  const formData = new FormData();
+  formData.append("file", data.file);
+  formData.append("language", data.language);
+  formData.append("audience", data.audience);
+
+  const response = await fetch(`${API_BASE_URL}/simplify/pdf`, {
+    method: "POST",
+    body: formData,
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.detail || "PDF simplification failed");
   }
 
   return response.json();
