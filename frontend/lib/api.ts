@@ -182,3 +182,65 @@ export async function generateRoadmap(
 
   return response.json();
 }
+export type ResumeAnalysisResponse = {
+  analysis: string;
+  language: string;
+  target_role: string;
+  message: string;
+};
+
+export async function analyzeResume(data: {
+  file: File;
+  target_role: string;
+  language: Language;
+}): Promise<ResumeAnalysisResponse> {
+  const formData = new FormData();
+  formData.append("file", data.file);
+  formData.append("target_role", data.target_role);
+  formData.append("language", data.language);
+
+  const response = await fetch(`${API_BASE_URL}/resume/analyze`, {
+    method: "POST",
+    body: formData,
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.detail || "Resume analysis failed");
+  }
+
+  return response.json();
+}
+export type CareerRecommendationRequest = {
+  branch: string;
+  year: string;
+  cgpa: number;
+  skills: string[];
+  interests: string[];
+  strengths: string[];
+  language: Language;
+};
+
+export type CareerRecommendationResponse = {
+  recommendations: string;
+  message: string;
+};
+
+export async function generateCareerRecommendations(
+  data: CareerRecommendationRequest
+): Promise<CareerRecommendationResponse> {
+  const response = await fetch(`${API_BASE_URL}/career/recommend`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.detail || "Career recommendation failed");
+  }
+
+  return response.json();
+}

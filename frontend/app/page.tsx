@@ -62,11 +62,30 @@ export default function AdvisorPage() {
   return (
     <main className="min-h-screen bg-slate-950 px-6 py-8 text-white">
       <section className="mx-auto max-w-5xl">
-        <a href="/" className="text-sm text-blue-400 hover:text-blue-300">
-          ← Back to FirstGen AI
-        </a>
+        <div className="flex flex-wrap gap-3">
+          <a
+            href="/"
+            className="rounded-lg border border-slate-700 px-4 py-2 text-sm text-blue-400 hover:bg-slate-900 hover:text-blue-300"
+          >
+            ← Back to FirstGen AI
+          </a>
 
-        <div className="mb-8 mt-6">
+          <a
+            href="/resume"
+            className="rounded-lg border border-slate-700 px-4 py-2 text-sm text-purple-400 hover:bg-slate-900 hover:text-purple-300"
+          >
+            Open Resume Analyzer
+          </a>
+
+          <a
+            href="/career"
+            className="rounded-lg border border-slate-700 px-4 py-2 text-sm text-cyan-400 hover:bg-slate-900 hover:text-cyan-300"
+          >
+            Open Career Engine
+          </a>
+        </div>
+
+        <div className="mb-8 mt-8">
           <p className="mb-2 text-sm font-medium text-blue-400">
             FirstGen AI Advisor
           </p>
@@ -116,6 +135,7 @@ export default function AdvisorPage() {
                 value={cgpa}
                 onChange={(e) => setCgpa(e.target.value)}
                 placeholder="Example: 8.1"
+                inputMode="decimal"
                 className="w-full rounded-lg border border-slate-700 bg-slate-950 px-4 py-3 text-white outline-none focus:border-blue-500"
               />
             </div>

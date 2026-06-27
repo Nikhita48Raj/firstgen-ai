@@ -1,7 +1,15 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.api.routes import health, chat, documents, simplify, advisor, resume
+from app.api.routes import (
+    health,
+    chat,
+    documents,
+    simplify,
+    advisor,
+    resume,
+    career,
+)
 from app.core.config import settings
 
 
@@ -28,6 +36,7 @@ app.include_router(documents.router)
 app.include_router(simplify.router)
 app.include_router(advisor.router)
 app.include_router(resume.router)
+app.include_router(career.router)
 
 
 @app.get("/")
