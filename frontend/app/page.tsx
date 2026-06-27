@@ -83,6 +83,12 @@ export default function AdvisorPage() {
           >
             Open Career Engine
           </a>
+          <a
+            href="/risk"
+            className="inline-block rounded-lg bg-red-600 px-5 py-3 text-sm font-semibold text-white hover:bg-red-700"
+          >
+            Open Risk Predictor
+          </a>
         </div>
 
         <div className="mb-8 mt-8">

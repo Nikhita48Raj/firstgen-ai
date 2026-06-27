@@ -244,3 +244,48 @@ export async function generateCareerRecommendations(
 
   return response.json();
 }
+export type RiskPredictionRequest = {
+  branch: string;
+  year: string;
+  cgpa: number;
+  attendance_percent: number;
+  active_backlogs: number;
+  internal_marks_average?: number | null;
+  skills: string[];
+  project_count: number;
+  internship_count: number;
+  target_role: string;
+  language: Language;
+};
+
+export type RiskSummary = {
+  attendance_risk: "Low" | "Medium" | "High";
+  backlog_risk: "Low" | "Medium" | "High";
+  placement_readiness_score: number;
+  overall_risk: "Low" | "Medium" | "High";
+};
+
+export type RiskPredictionResponse = {
+  summary: RiskSummary;
+  explanation: string;
+  message: string;
+};
+
+export async function predictStudentRisk(
+  data: RiskPredictionRequest
+): Promise<RiskPredictionResponse> {
+  const response = await fetch(`${API_BASE_URL}/risk/predict`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.detail || "Risk prediction failed");
+  }
+
+  return response.json();
+}

@@ -9,6 +9,7 @@ from app.api.routes import (
     advisor,
     resume,
     career,
+    risk,
 )
 from app.core.config import settings
 
@@ -37,6 +38,7 @@ app.include_router(simplify.router)
 app.include_router(advisor.router)
 app.include_router(resume.router)
 app.include_router(career.router)
+app.include_router(risk.router)
 
 
 @app.get("/")
