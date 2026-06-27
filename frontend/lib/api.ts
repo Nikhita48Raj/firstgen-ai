@@ -149,3 +149,36 @@ export async function simplifyPDF(data: {
 
   return response.json();
 }
+
+export type AdvisorRequest = {
+  branch: string;
+  year: string;
+  cgpa: number;
+  skills: string[];
+  career_goal: string;
+  language: Language;
+};
+
+export type AdvisorResponse = {
+  roadmap: string;
+  message: string;
+};
+
+export async function generateRoadmap(
+  data: AdvisorRequest
+): Promise<AdvisorResponse> {
+  const response = await fetch(`${API_BASE_URL}/advisor/roadmap`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.detail || "Roadmap generation failed");
+  }
+
+  return response.json();
+}
